@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sports Council Tech Team Recruitment Task</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /**
+       * Global CSS Variables
+       * Defines color scheme and common styles used throughout the application
+       */
+      :root {
+        --primary-color: #ff7d00;
+        --primary-light: #ff9a44;
+        --primary-dark: #e56b00;
+        --secondary-color: #2d3142;
+        --accent-color: #ff5722;
+        --light-bg: #f8f9fa;
+        --text-color: #333333;
+        --text-color-light: #f8f9fa;
+        --text-color-muted: #6c757d;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+        --border-radius: 8px;
+        --border-radius-lg: 12px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      /**
+       * Base Styles
+       * Reset and base styling for all elements
+       */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 70px;
+        font-size: 16px;
+      }
+
+      body {
+        background-color: var(--light-bg);
+        color: var(--text-color);
+        line-height: 1.6;
+        transition: var(--transition);
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      /**
+       * Sidebar Navigation Styles
+       * Controls the fixed sidebar with navigation links
+       */
+      .sidebar {
+        width: 280px;
+        background-color: var(--secondary-color);
+        color: var(--text-color-light);
+        padding: 2rem 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 1000;
+        transition: var(--transition);
+        box-shadow: var(--box-shadow);
+      }
+
+      .sidebar-header {
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--primary-light);
+      }
+
+      .sidebar-header p {
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+
+      .nav-items {
+        list-style: none;
+        padding: 1.5rem 0;
+      }
+
+      .nav-item {
+        padding: 0.5rem 1.5rem;
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+      }
+
+      .nav-item.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid var(--primary-color);
+      }
+
+      .nav-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-item a {
+        color: var(--text-color-light);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
+      }
+
+      .nav-item i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .mobile-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: var(--box-shadow);
+      }
+
+      /**
+       * Main Content Styles
+       * Styles for the main content area and common elements
+       */
+      .main-content {
+        flex: 1;
+        margin-left: 280px;
+        padding: 2rem;
+        transition: var(--transition);
+        max-width: 100%;
+      }
+
+      /**
+       * Hero Section Styles
+       * Styles for the prominent banner at the top of the page
+       */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        color: white;
+        padding: 3rem 2rem;
+        border-radius: var(--border-radius-lg);
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.1) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        transform: rotate(30deg);
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+      }
+
+      .cta-button {
+        display: inline-block;
+        background-color: white;
+        color: var(--primary-color);
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: var(--transition);
+        box-shadow: var(--box-shadow);
+        position: relative;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        background-color: var(--light-bg);
+      }
+
+      /**
+       * Section & Content Element Styles
+       * Styles for section containers and common elements within
+       */
+      section {
+        margin-bottom: 3rem;
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--box-shadow);
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-color);
+        color: var(--primary-color);
+      }
+
+      h3 {
+        font-size: 1.4rem;
+        margin: 1.5rem 0 1rem;
+        color: var (--secondary-color);
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      ul,
+      ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      pre {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      code {
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      /**
+       * Card Grid Styles
+       * Grid layout for feature highlights
+       */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+
+      .card {
+        background-color: var(--light-bg);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      /**
+       * Timeline Styles
+       * Visual timeline display for milestones
+       */
+      .timeline {
+        position: relative;
+        max-width: 1200px;
+        margin: 2rem auto;
+      }
+
+      .timeline::after {
+        content: "";
+        position: absolute;
+        width: 6px;
+        background-color: var(--primary-color);
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+        border-radius: 10px;
+      }
+
+      .timeline-container {
+        padding: 10px 40px;
+        position: relative;
+        background-color: inherit;
+        width: 50%;
+      }
+
+      .timeline-container::after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        right: -14px;
+        background-color: var(--light-bg);
+        border: 4px solid var(--primary-color);
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      .left {
+        left: 0;
+      }
+
+      .right {
+        left: 50%;
+      }
+
+      .left::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        right: 30px;
+        border: medium solid white;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent white;
+      }
+
+      .right::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        left: 30px;
+        border: medium solid white;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent white transparent transparent;
+      }
+
+      .right::after {
+        left: -14px;
+      }
+
+      .timeline-content {
+        padding: 20px 30px;
+        background-color: white;
+        position: relative;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+      }
+
+      /**
+       * FAQ Styles
+       * Accordion style for FAQ section
+       */
+      .faq-container {
+        margin: 2rem 0;
+      }
+
+      .faq-item {
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+      }
+
+      .faq-question {
+        padding: 1rem;
+        background-color: rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: var(--transition);
+      }
+
+      .faq-question:hover {
+        background-color: rgba(255, 165, 0, 0.1);
+      }
+
+      .faq-question i {
+        transition: var(--transition);
+        color: var(--primary-color);
+      }
+
+      .faq-answer {
+        padding: 0 1rem;
+        max-height: 0;
+        overflow: hidden;
+        transition: var(--transition);
+      }
+
+      .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      .faq-item.active .faq-answer {
+        padding: 1rem;
+        max-height: 1000px;
+      }
+
+      /**
+       * Progress indicator for navigation
+       */
+      .progress-indicator {
+        height: 3px;
+        background-color: var(--primary-color);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        transition: width 0.3s ease;
+      }
+
+      /**
+       * Responsive Design
+       * Media queries for responsive layout on different screen sizes
+       */
+      @media (min-width: 1400px) {
+        .main-content {
+          max-width: 1320px;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: 300px;
+        }
+
+        html {
+          font-size: 18px;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .card-grid {
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        html {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 240px;
+        }
+        .main-content {
+          margin-left: 240px;
+        }
+
+        .hero h1 {
+          font-size: 2.2rem;
+        }
+
+        .card-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        html {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          width: 260px;
+        }
+        .sidebar.active {
+          transform: translateX(0);
+        }
+        .main-content {
+          margin-left: 0;
+          padding: 1.5rem;
+        }
+        .mobile-toggle {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .hero h1 {
+          font-size: 1.8rem;
+        }
+        .hero p {
+          font-size: 1rem;
+        }
+        .timeline::after {
+          left: 31px;
+        }
+        .timeline-container {
+          width: 100%;
+          padding-left: 70px;
+          padding-right: 25px;
+        }
+        .timeline-container::before {
+          left: 60px;
+          border: medium solid white;
+          border-width: 10px 10px 10px 0;
+          border-color: transparent white transparent transparent;
+        }
+
+        .left::after,
+        .right::after {
+          left: 17px;
+        }
+        .right {
+          left: 0%;
+        }
+
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.6rem;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero {
+          padding: 2rem 1rem;
+        }
+        .hero h1 {
+          font-size: 1.6rem;
+        }
+        section {
+          padding: 1.25rem;
+        }
+        h2 {
+          font-size: 1.4rem;
+        }
+        h3 {
+          font-size: 1.2rem;
+        }
+
+        .timeline-container {
+          padding-left: 50px;
+        }
+
+        .timeline::after {
+          left: 21px;
+        }
+
+        .left::after,
+        .right::after {
+          left: 7px;
+        }
+
+        pre {
+          padding: 0.75rem;
+        }
+
+        .main-content {
+          padding: 1rem;
+        }
+      }
+
+      @media (max-width: 430px) {
+        html {
+          font-size: 14px;
+        }
+
+        .hero h1 {
+          font-size: 1.4rem;
+        }
+
+        .cta-button {
+          padding: 0.6rem 1.5rem;
+        }
+
+        .mobile-toggle {
+          width: 40px;
+          height: 40px;
+          font-size: 1rem;
+        }
+      }
+
+      /**
+       * Submission Portal Overlay Styles
+       * Overlay dialog for submission form
+       */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .overlay-content {
+        width: 90vw;
+        height: 90vh;
+        background-color: white;
+        border-radius: var(--border-radius-lg);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--box-shadow);
+      }
+
+      .close-overlay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 2001;
+        box-shadow: var(--box-shadow);
+      }
+
+      .submission-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .submit-button {
+        display: block;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.8rem 2rem;
+        text-align: center;
+        border-radius: 50px;
+        font-weight: bold;
+        margin: 2rem auto;
+        cursor: pointer;
+        text-decoration: none;
+        transition: var(--transition);
+        border: none;
+        box-shadow: var(--box-shadow);
+      }
+
+      .submit-button:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      @media (max-width: 768px) {
+        .overlay-content {
+          width: 95vw;
+          height: 95vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile navigation toggle button -->
+    <button class="mobile-toggle" id="mobileToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="container">
+      <!-- Sidebar navigation menu -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h2>Sports Council Tech Team</h2>
+          <p>Recruitment Task</p>
+        </div>
+        <ul class="nav-items" id="navItems">
+          <li class="nav-item active" data-target="overview">
+            <a href="#overview">
+              <i class="fas fa-home"></i>
+              Overview
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="challenge">
+            <a href="#challenge">
+              <i class="fas fa-tasks"></i>
+              The Challenge
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="core-requirements">
+            <a href="#core-requirements">
+              <i class="fas fa-list-check"></i>
+              Core Requirements
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="technical-requirements">
+            <a href="#technical-requirements">
+              <i class="fas fa-code"></i>
+              Technical Requirements
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="getting-started">
+            <a href="#getting-started">
+              <i class="fas fa-rocket"></i>
+              Getting Started
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="project-structure">
+            <a href="#project-structure">
+              <i class="fas fa-sitemap"></i>
+              Project Structure
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="milestones">
+            <a href="#milestones">
+              <i class="fas fa-flag-checkered"></i>
+              Milestones
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="evaluation">
+            <a href="#evaluation">
+              <i class="fas fa-star"></i>
+              Evaluation Criteria
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="submission">
+            <a href="#submission">
+              <i class="fas fa-paper-plane"></i>
+              Submission Guidelines
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+          <li class="nav-item" data-target="faq">
+            <a href="#faq">
+              <i class="fas fa-question-circle"></i>
+              FAQ
+            </a>
+            <div class="progress-indicator"></div>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- Main content area -->
+      <main class="main-content">
+        <!-- Hero banner section -->
+        <div class="hero">
+          <h1>Sports Council Tech Team - Recruitment Task</h1>
+          <p>
+            Build a comprehensive sports event management system to showcase
+            your technical expertise and problem-solving skills.
+          </p>
+          <a
+            href="https://github.com/unignoramus11/sports-council-recruitment-task"
+            class="cta-button"
+            target="_blank"
+          >
+            <i class="fab fa-github"></i> Accept the Task
+          </a>
+        </div>
+
+        <!-- Overview section -->
+        <section id="overview">
+          <h2>Overview</h2>
+          <p>
+            This recruitment task is designed to thoroughly assess your
+            technical expertise with the Sports Council Website's technology
+            stack at IIIT Hyderabad. You'll be building a comprehensive sports
+            event management system that showcases your proficiency in:
+          </p>
+
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-desktop"></i></div>
+              <div class="card-title">Frontend</div>
+              <p>Svelte/SvelteKit with Flowbite-Svelte components</p>
+            </div>
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-server"></i></div>
+              <div class="card-title">Backend</div>
+              <p>Python FastAPI</p>
+            </div>
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-database"></i></div>
+              <div class="card-title">Database</div>
+              <p>MongoDB</p>
+            </div>
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-box"></i></div>
+              <div class="card-title">Deployment</div>
+              <p>Docker</p>
+            </div>
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-vial"></i></div>
+              <div class="card-title">Testing</div>
+              <p>Jest (Frontend), Pytest (Backend)</p>
+            </div>
+            <div class="card">
+              <div class="card-icon"><i class="fas fa-lock"></i></div>
+              <div class="card-title">Authentication</div>
+              <p>JWT-based with role permissions</p>
+            </div>
+          </div>
+
+          <h3>Challenge Timeline: 2 Months</h3>
+          <p>
+            This task is intentionally extensive to evaluate your ability to
+            handle complex feature implementation, architectural decisions,
+            performance optimization, and production-ready code-skills we value
+            in our development team. Do note whatever you make should look great
+            on all screen sizes.
+          </p>
+        </section>
+
+        <!-- The Challenge section -->
+        <section id="challenge">
+          <h2>The Challenge: Advanced Tournament Management System</h2>
+
+          <h3>What's Provided</h3>
+          <ul>
+            <li>Basic project structure with Docker setup</li>
+            <li>Minimal skeleton code for frontend and backend</li>
+            <li>MongoDB connection setup</li>
+            <li>Simple authentication flow</li>
+          </ul>
+        </section>
+
+        <!-- Core Requirements section -->
+        <section id="core-requirements">
+          <h2>Core Requirements</h2>
+
+          <h3>1. Tournament Management</h3>
+          <ul>
+            <li>Create a complete tournament lifecycle management system</li>
+            <li>
+              Implement a tournament bracket/elimination system with match
+              scheduling
+            </li>
+            <li>Build a results tracking system with leaderboards</li>
+            <li>
+              Add support for different tournament formats (leagues, knockouts,
+              round-robin)
+            </li>
+            <li>
+              <em>(Bonus)</em> Implement a real-time match update system using
+              WebSockets
+            </li>
+          </ul>
+
+          <h3>2. Advanced Registration System</h3>
+          <ul>
+            <li>
+              Create sport-specific registration forms with dynamic fields
+            </li>
+            <li>
+              <em>(Bonus)</em> Integrate these forms with CAS (Central
+              Authentication Service) to ease the process for users
+            </li>
+            <li>
+              Implement team management with player profiles and statistics
+            </li>
+            <li>
+              Add validation for team eligibility (minimum/maximum players,
+              etc.)
+            </li>
+            <li>Build a waitlist system for tournaments that are full</li>
+          </ul>
+
+          <h3>3. Venue Management</h3>
+          <ul>
+            <li>Create a system to manage sports venues and resources</li>
+            <li>Implement booking/scheduling to prevent conflicts</li>
+            <li>
+              Add venue availability visualization through a calendar interface
+            </li>
+          </ul>
+
+          <h3>4. User System</h3>
+          <ul>
+            <li>
+              Implement multi-role user system (admin, organizer, captain,
+              player)
+            </li>
+            <li>
+              Create a permissions system with fine-grained access control
+            </li>
+            <li>Add user profiles with sports participation history</li>
+            <li>
+              <em>(Bonus)</em> Implement email notifications for important
+              events
+            </li>
+          </ul>
+
+          <h3>5. Admin Dashboard</h3>
+          <ul>
+            <li>Build comprehensive analytics for tournament participation</li>
+            <li>
+              Create tournament management workflows with approval processes
+            </li>
+            <li>
+              Implement content management for tournament rules and
+              announcements
+            </li>
+            <li>Add administrative controls for user management</li>
+            <li>
+              Implement a logging system for tracking changes and actions with
+              audit trails
+            </li>
+          </ul>
+        </section>
+
+        <!-- Technical Requirements section -->
+        <section id="technical-requirements">
+          <h2>Technical Requirements</h2>
+
+          <h3>Frontend</h3>
+          <ul>
+            <li>
+              Build a responsive, accessible UI with Flowbite-Svelte components
+            </li>
+            <li>
+              Implement advanced state management patterns using Svelte stores
+            </li>
+            <li>Create lazy-loaded routes for performance optimization</li>
+            <li>Build reusable, well-documented component library</li>
+            <li>
+              Implement client-side form validation with proper error handling
+            </li>
+            <li>Add dark/light theme support</li>
+            <li>Write unit and integration tests for critical components</li>
+            <li>
+              <strong>Provide comprehensive user feedback</strong> through toast
+              notifications for all user actions
+            </li>
+            <li>
+              <strong>Design intuitive user flows</strong> that are clear for
+              first-time users
+            </li>
+            <li>
+              <strong>Implement thoughtful UI states</strong> (loading, error,
+              success, empty) for all interactions
+            </li>
+          </ul>
+
+          <h3>Backend</h3>
+          <ul>
+            <li>
+              Implement a well-structured, modular API with proper separation of
+              concerns
+            </li>
+            <li>Create comprehensive input validation and error handling</li>
+            <li>Implement database transactions for data integrity</li>
+            <li>Add rate limiting and security best practices</li>
+            <li>Implement caching strategies for performance</li>
+            <li>Create a comprehensive test suite with pytest</li>
+            <li>Document all API endpoints with OpenAPI/Swagger</li>
+          </ul>
+
+          <h3>Database</h3>
+          <ul>
+            <li>Design efficient and normalized MongoDB schemas</li>
+            <li>Implement proper indexing strategies for query optimization</li>
+            <li>Create data validation at the database level</li>
+            <li>Implement data aggregation pipelines for analytics</li>
+            <li>Add data migration strategies</li>
+          </ul>
+
+          <h3>DevOps</h3>
+          <ul>
+            <li>
+              Extend Docker setup for development and production environments
+            </li>
+            <li><em>(Bonus)</em> Add CI/CD pipeline configuration</li>
+            <li>Implement logging and monitoring strategies</li>
+            <li>Create backup and restore procedures</li>
+          </ul>
+        </section>
+
+        <!-- Getting Started section -->
+        <section id="getting-started">
+          <h2>Getting Started</h2>
+          <p>
+            We've provided you with a minimal project structure to get started.
+            You'll need to extend and enhance this foundation.
+          </p>
+
+          <h3>1. Start the development environment:</h3>
+          <pre><code>docker-compose up</code></pre>
+
+          <h3>2. Access the application:</h3>
+          <ul>
+            <li>
+              Frontend:
+              <a
+                href="http://localhost:3000"
+                target="_blank"
+                rel="noopener noreferrer"
+                >http://localhost:3000</a
+              >
+            </li>
+            <li>
+              Backend API:
+              <a
+                href="http://localhost:8000"
+                target="_blank"
+                rel="noopener noreferrer"
+                >http://localhost:8000</a
+              >
+            </li>
+            <li>
+              API Documentation:
+              <a
+                href="http://localhost:8000/docs"
+                target="_blank"
+                rel="noopener noreferrer"
+                >http://localhost:8000/docs</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <!-- Project Structure section -->
+        <section id="project-structure">
+          <h2>Project Structure</h2>
+          <p>
+            The repository contains a basic structure that you'll need to
+            extend:
+          </p>
+          <pre><code>recruitment-task/
+├── frontend/               # SvelteKit application (extend this)
+├── backend/                # FastAPI application (extend this)
+├── nginx/                  # Nginx configuration (may need updates)
+├── docker-compose.yml      # Docker compose setup (extend as needed)
+└── README.md               # Project documentation</code></pre>
+        </section>
+
+        <!-- Milestones section -->
+        <section id="milestones">
+          <h2>Milestones (Suggested Timeline)</h2>
+
+          <div class="timeline">
+            <div class="timeline-container left">
+              <div class="timeline-content">
+                <h3>Week 1: Foundation and Core Features</h3>
+                <ul>
+                  <li>Set up enhanced project structure</li>
+                  <li>Implement basic models and database schemas</li>
+                  <li>Create core API endpoints</li>
+                  <li>Set up authentication and user management</li>
+                  <li>Build base UI components and layouts</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-container right">
+              <div class="timeline-content">
+                <h3>Week 2: Tournament and Registration Systems</h3>
+                <ul>
+                  <li>Develop tournament management features</li>
+                  <li>Implement advanced registration system</li>
+                  <li>Create team management functionality</li>
+                  <li>Build tournament bracket visualization</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-container left">
+              <div class="timeline-content">
+                <h3>Week 3: Advanced Features</h3>
+                <ul>
+                  <li>Implement venue management system</li>
+                  <li>Create reporting and analytics dashboards</li>
+                  <li>Build notification system</li>
+                  <li>Add advanced filtering and search capabilities</li>
+                </ul>
+              </div>
+            </div>
+            <div class="timeline-container right">
+              <div class="timeline-content">
+                <h3>Week 4: Refinement and Quality Assurance</h3>
+                <ul>
+                  <li>Write comprehensive tests</li>
+                  <li>Optimize performance</li>
+                  <li>Enhance UI/UX</li>
+                  <li>Add documentation</li>
+                  <li>Final polishing</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Evaluation Criteria section -->
+        <section id="evaluation">
+          <h2>Evaluation Criteria</h2>
+          <p>Your solution will be evaluated based on:</p>
+
+          <h3>1. Technical Excellence</h3>
+          <ul>
+            <li>Code quality and organization</li>
+            <li>Architecture and design patterns</li>
+            <li>Performance optimization</li>
+            <li>Security implementation</li>
+          </ul>
+
+          <h3>2. Completeness and Functionality</h3>
+          <ul>
+            <li>Feature implementation</li>
+            <li>Error handling and edge cases</li>
+            <li>Usability of the solution</li>
+          </ul>
+
+          <h3>3. User Experience (UX)</h3>
+          <ul>
+            <li><strong>We strongly consider UX in our evaluation</strong></li>
+            <li>
+              Identify what aspects of usability metrics are lacking in the
+              current website
+            </li>
+            <li>
+              Provide appropriate feedback for every user action (toast
+              notifications, etc.)
+            </li>
+            <li>
+              Create intuitive workflows that are clear to first-time users
+            </li>
+            <li>Design consistent and accessible interfaces</li>
+            <li>
+              Implement responsive design that works well across all devices
+            </li>
+            <li>
+              These principles apply to all the interfaces, including create and
+              edit pages
+            </li>
+          </ul>
+
+          <h3>4. Best Practices</h3>
+          <ul>
+            <li>Testing approach</li>
+            <li>Documentation quality</li>
+            <li>Adherence to coding standards</li>
+            <li>Git workflow and commit quality</li>
+          </ul>
+
+          <h3>5. Innovation and Problem-Solving</h3>
+          <ul>
+            <li>Creative solutions to complex problems</li>
+            <li>Extra features and improvements</li>
+            <li>User experience considerations</li>
+          </ul>
+        </section>
+
+        <!-- Submission Guidelines section -->
+        <section id="submission">
+          <h2>Submission Guidelines</h2>
+          <ol>
+            <li>
+              Make regular, meaningful commits showing your progress:
+              <ul>
+                <li>Use clear commit messages</li>
+                <li>
+                  Follow a consistent branching strategy (feature branches,
+                  etc.)
+                </li>
+              </ul>
+            </li>
+            <li>
+              Before submitting:
+              <ul>
+                <li>Push all your changes</li>
+                <li>Ensure everything runs in your Docker setup</li>
+                <li>
+                  Add a final README inside your repo documenting:
+                  <ul>
+                    <li>Architecture and design decisions</li>
+                    <li>Features implemented</li>
+                    <li>Installation and setup instructions</li>
+                    <li>Known limitations and future improvements</li>
+                    <li>Testing strategy</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              When you're ready, fill the submission form to notify us (use the
+              button below).
+            </li>
+          </ol>
+
+          <div class="notes">
+            <h3>Notes</h3>
+            <ul>
+              <li>
+                This is an intentionally challenging task. We do NOT expect 100%
+                completion of all features.
+              </li>
+              <li>
+                Focus on quality over quantity: well-implemented core features
+                are better than many incomplete ones.
+              </li>
+              <li>
+                Document any compromises and decisions you made due to time
+                constraints.
+              </li>
+              <li>
+                Feel free to use additional libraries that might help you, but
+                document your choices.
+              </li>
+            </ul>
+          </div>
+
+          <button id="openSubmissionPortal" class="submit-button">
+            <i class="fas fa-upload"></i> Open Submission Portal
+          </button>
+
+          <p>
+            If you have questions or need clarification, please open an issue in
+            the repository.
+          </p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+          <h2>Frequently Asked Questions</h2>
+
+          <div class="faq-container">
+            <div class="faq-item">
+              <div class="faq-question">
+                Do I need to implement all the features?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  No, this is an intentionally challenging task. We do not
+                  expect 100% completion of all features. Focus on quality over
+                  quantity: well-implemented core features are better than many
+                  incomplete ones.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                Can I use additional libraries not mentioned in the task?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Yes, you can use additional libraries that might help you
+                  implement the features more efficiently. Just make sure to
+                  document your choices in the README.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                How important is responsive design?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Very important! The application should look great and function
+                  well on all screen sizes. We specifically evaluate responsive
+                  design as part of the UX criteria.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                Should I prioritize backend or frontend development?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  We recommend a balanced approach, focusing on end-to-end
+                  implementation of key features rather than completing all
+                  backend work before starting the frontend or vice versa.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                How detailed should my documentation be?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Documentation is a key part of our evaluation. Your README
+                  should clearly explain architecture decisions, features
+                  implemented, setup instructions, and any known limitations.
+                  API endpoints should be documented with OpenAPI/Swagger, and
+                  code should have appropriate comments.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                What if I encounter technical issues or have questions?
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  If you have questions or need clarification, please open an
+                  issue in your repository, and ping us on WhatsApp. We
+                  encourage questions that show you're thinking deeply about the
+                  problem.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Submission Portal Overlay -->
+    <div class="overlay" id="submissionPortal">
+      <div class="overlay-content">
+        <button class="close-overlay" id="closeSubmissionPortal">
+          <i class="fas fa-times"></i>
+        </button>
+        <iframe
+          src="https://forms.office.com/r/ziUueqhyq0?embed=true"
+          class="submission-iframe"
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Navigation and UI Interaction JavaScript
+       *
+       * This script handles:
+       * 1. Navigation between sections with smooth scrolling
+       * 2. Mobile sidebar toggling
+       * 3. FAQ accordion functionality
+       * 4. Scroll spy for updating active navigation
+       * 5. Submission portal overlay
+       */
+
+      // Element references
+      const navItems = document.querySelectorAll(".nav-item");
+      const sections = document.querySelectorAll("section");
+      const sidebar = document.getElementById("sidebar");
+      const mobileToggle = document.getElementById("mobileToggle");
+
+      /**
+       * Toggle mobile sidebar menu
+       * Shows/hides the sidebar and changes the toggle icon
+       */
+      mobileToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+
+        // Change icon based on sidebar state
+        const icon = mobileToggle.querySelector("i");
+        if (sidebar.classList.contains("active")) {
+          icon.classList.remove("fa-bars");
+          icon.classList.add("fa-times");
+        } else {
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        }
+      });
+
+      /**
+       * Close sidebar when clicking on a navigation item on mobile
+       */
+      navItems.forEach((item) => {
+        item.addEventListener("click", () => {
+          sidebar.classList.remove("active");
+          const icon = mobileToggle.querySelector("i");
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        });
+      });
+
+      /**
+       * Close sidebar when clicking outside on mobile
+       */
+      document.addEventListener("click", (e) => {
+        if (
+          sidebar.classList.contains("active") &&
+          !sidebar.contains(e.target) &&
+          e.target !== mobileToggle &&
+          !mobileToggle.contains(e.target)
+        ) {
+          sidebar.classList.remove("active");
+          const icon = mobileToggle.querySelector("i");
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        }
+      });
+
+      /**
+       * FAQ toggle functionality
+       * Handles the accordion behavior of FAQ items
+       */
+      const faqItems = document.querySelectorAll(".faq-item");
+
+      faqItems.forEach((item) => {
+        const question = item.querySelector(".faq-question");
+
+        question.addEventListener("click", () => {
+          // Close other FAQ items
+          faqItems.forEach((otherItem) => {
+            if (otherItem !== item && otherItem.classList.contains("active")) {
+              otherItem.classList.remove("active");
+            }
+          });
+
+          // Toggle current FAQ item
+          item.classList.toggle("active");
+        });
+      });
+
+      /**
+       * Scroll spy functionality
+       * Updates the active navigation item based on scroll position
+       */
+      function updateActiveNavItem() {
+        // Get current scroll position with offset
+        const scrollPosition = window.scrollY + 100;
+
+        // Find the current section
+        let currentSection = null;
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+
+          if (
+            scrollPosition >= sectionTop &&
+            scrollPosition < sectionTop + sectionHeight
+          ) {
+            currentSection = section.id;
+          }
+        });
+
+        // Update active nav item and progress indicator
+        if (currentSection) {
+          navItems.forEach((item) => {
+            const targetId = item.getAttribute("data-target");
+            if (targetId === currentSection) {
+              item.classList.add("active");
+
+              // Update progress indicator
+              const progressIndicator = item.querySelector(
+                ".progress-indicator"
+              );
+
+              // Calculate how far through the section we are
+              const section = document.getElementById(currentSection);
+              const sectionTop = section.offsetTop;
+              const sectionHeight = section.offsetHeight;
+              const scrollPercentage = Math.min(
+                100,
+                Math.max(
+                  0,
+                  ((scrollPosition - sectionTop) / sectionHeight) * 100
+                )
+              );
+
+              progressIndicator.style.width = `${scrollPercentage}%`;
+            } else {
+              item.classList.remove("active");
+              // Reset progress indicator for inactive items
+              const progressIndicator = item.querySelector(
+                ".progress-indicator"
+              );
+              progressIndicator.style.width = "0";
+            }
+          });
+        }
+      }
+
+      // Initialize scroll spy and add event listener
+      updateActiveNavItem();
+      window.addEventListener("scroll", updateActiveNavItem);
+
+      /**
+       * Responsive layout adjustments
+       * Handles layout changes on window resize
+       */
+      window.addEventListener("resize", () => {
+        // Reset sidebar state on desktop view
+        if (window.innerWidth > 768) {
+          sidebar.classList.remove("active");
+          const icon = mobileToggle.querySelector("i");
+          icon.classList.remove("fa-times");
+          icon.classList.add("fa-bars");
+        }
+
+        // Update active navigation item
+        updateActiveNavItem();
+      });
+
+      /**
+       * Smooth scrolling navigation
+       * Scrolls to the target section when clicking nav items
+       */
+      navItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = item.getAttribute("data-target");
+          const targetSection = document.getElementById(targetId);
+
+          window.scrollTo({
+            top: targetSection.offsetTop - 20,
+            behavior: "smooth",
+          });
+        });
+      });
+
+      /**
+       * Submission portal functionality
+       * Controls the overlay for the submission form
+       */
+      const openSubmissionPortal = document.getElementById(
+        "openSubmissionPortal"
+      );
+      const closeSubmissionPortal = document.getElementById(
+        "closeSubmissionPortal"
+      );
+      const submissionPortal = document.getElementById("submissionPortal");
+
+      openSubmissionPortal.addEventListener("click", () => {
+        submissionPortal.classList.add("active");
+      });
+
+      closeSubmissionPortal.addEventListener("click", () => {
+        submissionPortal.classList.remove("active");
+      });
+    </script>
+  </body>
+</html>

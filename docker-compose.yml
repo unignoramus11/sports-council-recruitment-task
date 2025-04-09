@@ -1,0 +1,60 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - sports-council-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/sports_council_recruitment
+      - MONGO_DATABASE=sports_council_recruitment
+      - JWT_SECRET=your_jwt_secret_key_change_this_in_production
+    depends_on:
+      - mongodb
+    networks:
+      - sports-council-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - sports-council-network
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "3000:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - sports-council-network
+
+networks:
+  sports-council-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
