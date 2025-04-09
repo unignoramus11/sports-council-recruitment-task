@@ -133,7 +133,7 @@ recruitment-task/
 
 ## Milestones (Suggested Timeline)
 
-### Week 1: Foundation and Core Features
+### Weeks 1-2: Foundation and Core Features
 
 - Set up enhanced project structure
 - Implement basic models and database schemas
@@ -141,21 +141,21 @@ recruitment-task/
 - Set up authentication and user management
 - Build base UI components and layouts
 
-### Week 2: Tournament and Registration Systems
+### Weeks 3-4: Tournament and Registration Systems
 
 - Develop tournament management features
 - Implement advanced registration system
 - Create team management functionality
 - Build tournament bracket visualization
 
-### Week 3: Advanced Features
+### Weeks 5-6: Advanced Features
 
 - Implement venue management system
 - Create reporting and analytics dashboards
 - Build notification system
 - Add advanced filtering and search capabilities
 
-### Week 4: Refinement and Quality Assurance
+### Weeks 7-8: Refinement and Quality Assurance
 
 - Write comprehensive tests
 - Optimize performance
